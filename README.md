@@ -17,7 +17,7 @@ But of course, you can use it without **testcase-gen** by generating same-struct
 ### 1. Install
 
 ```bash
-npm i -g testcase-run
+npm i testcase-run
 ```
 
 ### 2. Run your code
