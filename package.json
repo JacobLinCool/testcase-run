@@ -1,11 +1,12 @@
 {
     "name": "testcase-run",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Testcase Runner",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "bin":{
-        "testcase-gen": "lib/cli.js"
+        "testcase-run": "lib/cli.js",
+        "tc-run": "lib/cli.js"
     },
     "files": [
         "lib"
