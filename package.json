@@ -31,5 +31,13 @@
         "ts-node": "^10.3.0",
         "typedoc": "^0.22.5",
         "typescript": "^4.4.4"
+    },
+    "bugs": {
+      "url": "https://github.com/JacobLinCool/testcase-run/issues"
+    },
+    "homepage": "https://jacoblincool.github.io/testcase-run/",
+    "repository": {
+      "type": "git",
+      "url": "git+ssh://git@github.com/JacobLinCool/testcase-run.git"
     }
 }
