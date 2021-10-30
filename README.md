@@ -30,7 +30,7 @@ const path = require("path");
 const testcases = fs.readFileSync(path.join(__dirname, "testcases.json"), "utf-8");
 const runner = new Runner(testcases);
 
-runner.run("D:\\sum.exe", { timeout: 10_000 }).then((report) => {
+runner.run("D:\\sum.exe", { timeout: 10_000, core: 2 }).then((report) => {
     fs.writeFileSync(path.join(__dirname, "report.json"), JSON.stringify(report, null, 2), "utf-8");
     console.log(`runned ${report.reduce((acc, cur) => acc + cur.results.length, 0)} testcases`);
 });
@@ -47,10 +47,11 @@ npm i -g testcase-run
 ### Use CLI
 
 ```bash
-testcase-run --executable [executable path] --testcase [testcase path] --output [output path] --timeout [timeout]
+testcase-run --executable [executable path] --testcase [testcase path] --output [output path] --timeout [timeout] --core [core number]
         --executable (-e): Executable File Path.
         --testcase (-t): Testcase File Path.
         --output (-o): Output (Report) File Path.
         --timeout (-ti): Timeout (ms).
+        --core (-c): Core Number.
         --version (-V) or (-v): Show version and help.
 ```
