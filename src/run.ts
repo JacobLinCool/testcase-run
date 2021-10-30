@@ -4,14 +4,12 @@ import { result } from "./types";
 function run(exe: string, { input = "", timeout = 5000 } = {}): Promise<result> {
     return new Promise((resolve, reject) => {
         try {
-            let stdout = "",
-                time = 0,
-                StartTime = Date.now();
+            let stdout = "";
             const program = spawn(exe, { timeout });
+            let StartTime = Date.now();
 
             program.on("close", (code: number | null) => {
-                time = Date.now() - StartTime;
-                resolve({ code, stdout, time });
+                resolve({ code, stdout, time: Date.now() - StartTime });
             });
 
             program.stdout.on("data", (data) => {
