@@ -1,5 +1,7 @@
+import { cpus } from "os";
 import { testcase, result, report } from "./types";
 import run from "./run";
+import Pool from "./pool";
 
 class Runner {
     public testcases: testcase[] = [];
@@ -28,16 +30,22 @@ class Runner {
         return this;
     }
 
-    public async run(exePath: string, { timeout = 5000 } = {}): Promise<report[]> {
-        let c = 0;
+    /**
+     * @param exePath
+     * @param options
+     */
+    public async run(exePath: string, { timeout = 5000, core = cpus().length - 1 || 1 } = {}): Promise<report[]> {
+        if (core > cpus().length) core = cpus().length;
+
         const reports: report[] = [];
         for (let i = 0; i < this.testcases.length; i++) {
-            const results: result[] = [];
             const cases = this.testcases[i].testcase.split("\n\n").filter(Boolean);
-            for (let j = 0; j < cases.length; j++) {
-                results.push(await run(exePath, { input: cases[j], timeout }));
-            }
-            reports.push({ testcase: this.testcases[i], results });
+
+            const pool = new Pool(core);
+            for (let j = 0; j < cases.length; j++) pool.push(() => run(exePath, { input: cases[j], timeout }));
+            await pool.go();
+
+            reports.push({ testcase: this.testcases[i], results: pool.results as result[] });
         }
 
         return reports;
